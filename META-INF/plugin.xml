@@ -1,0 +1,47 @@
+<idea-plugin version="2">
+  <id>com.gisttemplates</id>
+  <name>Gist Templates</name>
+  <version>0.1</version>
+  <vendor email="geowarin@gmail.com" url="http://geowarin.github.io/GistTemplates">YourCompany</vendor>
+
+  <description><![CDATA[
+      Fetch gists from one or several github gists account and use them as templates inside IntelliJ.<br>
+      <small>most HTML tags may be used</small>
+      ]]></description>
+
+  <change-notes><![CDATA[
+      Add change notes here.<br>
+      <small>most HTML tags may be used</small>
+      ]]>
+  </change-notes>
+
+  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="107.105"/>
+
+  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+      <action id="com.gisttemplates.action.GistTemplateAction" class="com.gisttemplates.action.GistTemplateAction" text="GistTemplates"
+              description="Insert a gist template from github">
+          <add-to-group group-id="GenerateGroup" anchor="last"/>
+          <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta G"/>
+      </action>
+  </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+      <applicationConfigurable instance="com.gisttemplates.configuration.GistTemplatesConfigurable" />
+  </extensions>
+</idea-plugin>
