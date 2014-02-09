@@ -5,7 +5,7 @@
   <vendor email="geowarin@gmail.com" url="http://geowarin.github.io/GistTemplates">YourCompany</vendor>
 
   <description><![CDATA[
-      Fetch gists from one or several github gists account and use them as templates inside IntelliJ.<br>
+      Fetch gists from one or several github gists accounts and use them as templates inside IntelliJ.<br>
       <small>most HTML tags may be used</small>
       ]]></description>
 
@@ -26,6 +26,9 @@
 
   <application-components>
     <!-- Add your application components here -->
+      <component>
+          <implementation-class>com.gisttemplates.GistTemplateApplication</implementation-class>
+      </component>
   </application-components>
 
   <project-components>
