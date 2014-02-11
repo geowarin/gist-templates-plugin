@@ -21,7 +21,6 @@ import java.util.List;
  */
 public class GistTemplateAction extends AnAction {
 
-
     public void actionPerformed(AnActionEvent e) {
         Editor editor = e.getData(LangDataKeys.EDITOR);
         List<TemplateImpl> templates = new ArrayList<TemplateImpl>();

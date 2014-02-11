@@ -1,6 +1,5 @@
 # Intellij
 .idea/
-*.iml
 *.iws
 *.ipr
 
