@@ -25,6 +25,11 @@ public class GistTemplatesConfigurable implements Configurable {
         return "Gist Templates";
     }
 
+    // No override because method is not in intellij 12+
+    public Icon getIcon() {
+        return null;
+    }
+
     @Override
     public boolean isModified() {
         return true;

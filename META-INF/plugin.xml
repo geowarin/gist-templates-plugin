@@ -2,21 +2,19 @@
   <id>com.gisttemplates</id>
   <name>Gist Templates</name>
   <version>0.1</version>
-  <vendor email="geowarin@gmail.com" url="http://geowarin.github.io/GistTemplates">YourCompany</vendor>
+  <vendor email="geowarin@gmail.com" url="http://geowarin.github.io/gist-templates-plugin">YourCompany</vendor>
 
   <description><![CDATA[
       Fetch gists from one or several github gists accounts and use them as templates inside IntelliJ.<br>
-      <small>most HTML tags may be used</small>
       ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <small>most HTML tags may be used</small>
+      v0.1
       ]]>
   </change-notes>
 
   <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
-  <idea-version since-build="107.105"/>
+  <idea-version since-build="117.418"/>
 
   <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
        on how to target different products -->
