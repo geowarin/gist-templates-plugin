@@ -22,8 +22,6 @@ import java.awt.event.ActionListener;
  */
 public class GistTemplatesConfigurable implements Configurable {
 
-    private JList accountList;
-    private JButton addButton;
     private JPanel parentPanel;
     private JCheckBox useMyGithubAccountCheckBox;
     private final GistTemplatesSettings gistTemplatesSettings;

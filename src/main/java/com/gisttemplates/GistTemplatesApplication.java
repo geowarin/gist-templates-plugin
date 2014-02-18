@@ -40,9 +40,7 @@ public class GistTemplatesApplication implements ApplicationComponent {
     }
 
     public void addCacheForUser(String githubUserName) {
-        GistCache gistCache = new GistCache(githubUserName);
-        gistCache.fetch(getGithubClient());
-        caches.add(gistCache);
+        caches.add(new GistCache(githubUserName));
     }
 
     public void invalidateCaches() {
@@ -69,7 +67,6 @@ public class GistTemplatesApplication implements ApplicationComponent {
     }
 
     private boolean initCaches() {
-
         for (GistCache cache : getCaches()) {
             cache.fetch(getGithubClient());
         }

@@ -39,7 +39,10 @@ public class GistCache {
             for (Gist gist : gistList) {
                 gists.add(gistService.getGist(gist.getId()));
             }
-
+        } catch (IOException e) {
+            LOG.error("Error while fetching gists for " + githubUserName, e);
+        }
+        try {
             if (includeFavorites) {
                 List<Gist> starredGistsFromService = gistService.getStarredGists();
                 for (Gist gist : starredGistsFromService) {
@@ -48,7 +51,7 @@ public class GistCache {
             }
 
         } catch (IOException e) {
-            LOG.error("Error while fetching gist for " + githubUserName, e);
+            LOG.error("Error while fetching favorite gists for " + githubUserName, e);
         }
     }
 

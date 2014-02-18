@@ -2,10 +2,10 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 sourceCompatibility = 1.6
-version = '1.0'
+version = '0.1'
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+        attributes 'Implementation-Title': 'Gist Templates IntelliJ plugin', 'Implementation-Version': version
     }
 }
 
@@ -28,11 +28,5 @@ uploadArchives {
         flatDir {
             dirs 'repos'
         }
-    }
-}
-
-task hello {
-    doLast {
-        println 'Hello world!'
     }
 }
