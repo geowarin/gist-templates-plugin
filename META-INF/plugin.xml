@@ -2,7 +2,7 @@
     <id>com.gisttemplates</id>
     <name>Gist Templates</name>
     <version>0.1</version>
-    <vendor email="geowarin@gmail.com" url="http://geowarin.github.io/gist-templates-plugin">Geoffrot Warin</vendor>
+    <vendor email="geowarin@gmail.com" url="http://geowarin.github.io/gist-templates-plugin">Geoffroy Warin</vendor>
 
     <description><![CDATA[
       Fetch gists from one or several github gists accounts and use them as templates inside IntelliJ.<br>
