@@ -1,11 +1,12 @@
 package com.gisttemplates.gist;
 
+import com.intellij.openapi.diagnostic.Logger;
 import org.eclipse.egit.github.core.Gist;
+import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.GistService;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,28 +16,25 @@ import java.util.List;
  * @author Geoffroy Warin (http://geowarin.github.io)
  */
 public class GistCache {
-    private Date lastUpdate;
     private final String githubUserName;
     private final List<Gist> gists = new ArrayList<Gist>();
+    private static final Logger LOG = Logger.getInstance(GistCache.class.getName());
+
 
     public GistCache(String githubUserName) {
         this.githubUserName = githubUserName;
-//        GitHubClient client = new GitHubClient();
-//        client.setCredentials("user", "passw0rd");
-//        List<Gist> starredGists = gistService.getStarredGists();
     }
 
-    public void fetch() {
-        GistService gistService = new GistService();
+    public void fetch(GitHubClient githubClient) {
+        GistService gistService = new GistService(githubClient);
         try {
             List<Gist> gistList = gistService.getGists(githubUserName);
             for (Gist gist : gistList) {
                 gists.add(gistService.getGist(gist.getId()));
             }
-            lastUpdate = new Date();
 
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            LOG.error("Error while fetching gist for " + githubUserName, e);
         }
     }
 

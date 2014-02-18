@@ -25,7 +25,7 @@
   <application-components>
     <!-- Add your application components here -->
       <component>
-          <implementation-class>com.gisttemplates.GistTemplateApplication</implementation-class>
+          <implementation-class>com.gisttemplates.GistTemplatesApplication</implementation-class>
       </component>
   </application-components>
 
@@ -44,5 +44,9 @@
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
       <applicationConfigurable instance="com.gisttemplates.configuration.GistTemplatesConfigurable" />
+      <applicationService serviceInterface="com.gisttemplates.configuration.GistTemplatesSettings"
+                          serviceImplementation="com.gisttemplates.configuration.GistTemplatesSettings"/>
   </extensions>
+
+    <depends>org.jetbrains.plugins.github</depends>
 </idea-plugin>
