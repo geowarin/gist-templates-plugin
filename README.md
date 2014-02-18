@@ -13,10 +13,10 @@ The plugin is available in `browse repositories` in intellij plugins
 2. Allow the plugin to use your github identification
 
 
-![image](images/generate.png)
+![image](/images/generate.png)
 
 
-![image](images/templates.png)
+![image](/images/templates.png)
 
 ## Change log
 
