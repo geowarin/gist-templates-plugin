@@ -6,9 +6,11 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.client.GitHubClient;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.plugins.github.GithubSettings;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -59,6 +61,13 @@ public class GistTemplatesApplication implements ApplicationComponent {
         return allGists;
     }
 
+    public List<Gist> getStarredGists() {
+        if (cacheForGithubUser != null) {
+            return cacheForGithubUser.getStarredGists();
+        }
+        return Collections.emptyList();
+    }
+
     private boolean initCaches() {
 
         for (GistCache cache : getCaches()) {
@@ -67,12 +76,13 @@ public class GistTemplatesApplication implements ApplicationComponent {
         return caches.isEmpty();
     }
 
+    @NotNull
     public String getComponentName() {
         return "GistTemplatesApplication";
     }
 
     public void addCacheForGithubUser() {
-        cacheForGithubUser = new GistCache(GithubSettings.getInstance().getLogin());
+        cacheForGithubUser = new GistCache(GithubSettings.getInstance().getLogin(), true);
     }
 
     public List<GistCache> getCaches() {

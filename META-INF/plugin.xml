@@ -9,7 +9,7 @@
       ]]></description>
 
   <change-notes><![CDATA[
-      v0.1
+      v0.1 : basic support for user github account and his favorites
       ]]>
   </change-notes>
 
@@ -34,7 +34,7 @@
   </project-components>
 
   <actions>
-      <action id="com.gisttemplates.action.GistTemplateAction" class="com.gisttemplates.action.GistTemplateAction" text="GistTemplates"
+      <action id="com.gisttemplates.action.GistTemplateEditorAction" class="com.gisttemplates.action.GistTemplateEditorAction" text="GistTemplates"
               description="Insert a gist template from github">
           <add-to-group group-id="GenerateGroup" anchor="last"/>
           <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta G"/>

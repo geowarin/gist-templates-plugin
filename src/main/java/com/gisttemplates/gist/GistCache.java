@@ -19,10 +19,17 @@ public class GistCache {
     private final String githubUserName;
     private final List<Gist> gists = new ArrayList<Gist>();
     private static final Logger LOG = Logger.getInstance(GistCache.class.getName());
-
+    private final boolean includeFavorites;
+    private final List<Gist> starredGists = new ArrayList<Gist>();
 
     public GistCache(String githubUserName) {
         this.githubUserName = githubUserName;
+        includeFavorites = false;
+    }
+
+    public GistCache(String githubUserName, boolean includeFavorites) {
+        this.githubUserName = githubUserName;
+        this.includeFavorites = includeFavorites;
     }
 
     public void fetch(GitHubClient githubClient) {
@@ -33,6 +40,13 @@ public class GistCache {
                 gists.add(gistService.getGist(gist.getId()));
             }
 
+            if (includeFavorites) {
+                List<Gist> starredGistsFromService = gistService.getStarredGists();
+                for (Gist gist : starredGistsFromService) {
+                    starredGists.add(gistService.getGist(gist.getId()));
+                }
+            }
+
         } catch (IOException e) {
             LOG.error("Error while fetching gist for " + githubUserName, e);
         }
@@ -40,5 +54,9 @@ public class GistCache {
 
     public List<Gist> getGists() {
         return gists;
+    }
+
+    public List<Gist> getStarredGists() {
+        return starredGists;
     }
 }
