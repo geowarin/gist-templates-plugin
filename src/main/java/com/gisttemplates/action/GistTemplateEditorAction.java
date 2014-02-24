@@ -35,20 +35,20 @@ public class GistTemplateEditorAction extends EditorAction {
                 @Override
                 public void onAction() {
                     System.out.println("REFRESH");
-//                    application.invalidateCaches();
-//                    application.getAllGists();
+                    application.invalidateCaches();
+                    application.getAllGists();
                 }
             };
 
             List<TemplateImpl> templates = new ArrayList<TemplateImpl>();
-//            for (Gist gist : application.getAllGists()) {
-//                TemplateImpl template = createTemplateFromGist(gist, false);
-//                templates.add(template);
-//            }
-//            for (Gist starredGist : application.getStarredGists()) {
-//                TemplateImpl template = createTemplateFromGist(starredGist, true);
-//                templates.add(template);
-//            }
+            for (Gist gist : application.getAllGists()) {
+                TemplateImpl template = createTemplateFromGist(gist, false);
+                templates.add(template);
+            }
+            for (Gist starredGist : application.getStarredGists()) {
+                TemplateImpl template = createTemplateFromGist(starredGist, true);
+                templates.add(template);
+            }
 
             new GistTemplateHandler(editor, editor.getProject()).showTemplatesLookup("", refreshAction, templates);
         }

@@ -7,7 +7,8 @@ import com.intellij.openapi.components.ApplicationComponent;
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.plugins.github.GithubSettings;
+import org.jetbrains.plugins.github.util.GithubAuthData;
+import org.jetbrains.plugins.github.util.GithubSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,10 +38,6 @@ public class GistTemplatesApplication implements ApplicationComponent {
     }
 
     public void disposeComponent() {
-    }
-
-    public void addCacheForUser(String githubUserName) {
-        caches.add(new GistCache(githubUserName));
     }
 
     public void invalidateCaches() {
@@ -98,8 +95,10 @@ public class GistTemplatesApplication implements ApplicationComponent {
     private GitHubClient getGithubClient() {
         GitHubClient client = new GitHubClient();
         if (gistTemplatesSettings.isUseGithubAccount()) {
-            GithubSettings githubSettings = GithubSettings.getInstance();
-            client.setCredentials(githubSettings.getLogin(), githubSettings.getPassword());
+            GithubAuthData.BasicAuth githubSettings = GithubSettings.getInstance().getAuthData().getBasicAuth();
+            if (githubSettings != null) {
+                client.setCredentials(githubSettings.getLogin(), githubSettings.getPassword());
+            }
         }
         return client;
     }

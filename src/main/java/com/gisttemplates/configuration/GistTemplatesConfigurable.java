@@ -5,10 +5,9 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.text.StringUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.plugins.github.GithubSettings;
+import org.jetbrains.plugins.github.util.GithubSettings;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -28,7 +27,6 @@ public class GistTemplatesConfigurable implements Configurable {
     private boolean isModified;
 
     private static final Logger LOG = Logger.getInstance(GistTemplatesConfigurable.class.getName());
-    private String githubPassword;
 
 
     public GistTemplatesConfigurable() {
@@ -45,11 +43,6 @@ public class GistTemplatesConfigurable implements Configurable {
     @Override
     public String getDisplayName() {
         return "Gist Templates";
-    }
-
-    // No override because method is not in intellij 12+
-    public Icon getIcon() {
-        return null;
     }
 
     @Override
@@ -86,7 +79,7 @@ public class GistTemplatesConfigurable implements Configurable {
     public static void main(String[] args) {
         JFrame frame = new JFrame("GistTemplatesConfigurable");
         frame.setContentPane(new GistTemplatesConfigurable().parentPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
@@ -98,8 +91,7 @@ public class GistTemplatesConfigurable implements Configurable {
 
             if (useMyGithubAccountCheckBox.isSelected()) {
 
-                githubPassword = getGithubPasswordFromSettings();
-                if (StringUtil.isEmpty(githubPassword)) {
+                if (GithubSettings.getInstance().isAuthConfigured()) {
                     LOG.info("GithubSettings are not set");
                     Messages.showErrorDialog(parentPanel, "Github settings are not defined", "Login Failure");
 
@@ -110,9 +102,5 @@ public class GistTemplatesConfigurable implements Configurable {
                 }
             }
         }
-    }
-
-    private String getGithubPasswordFromSettings() {
-        return GithubSettings.getInstance().getPassword();
     }
 }
