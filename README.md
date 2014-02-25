@@ -6,6 +6,7 @@ A plugin to use your gists as live templates !
 ## Installation
 
 The plugin is available in `browse repositories` in intellij plugins
+[http://plugins.jetbrains.com/plugin/7400](http://plugins.jetbrains.com/plugin/7400)
 
 ## Usage
 
@@ -20,8 +21,8 @@ The plugin is available in `browse repositories` in intellij plugins
 
 ## Change log
 
-
-* v0.1 : basic support for user github account and his favorites
+* v0.11 : Support for intellij 11 to 13
+* v0.1 : basic support for user's github account and his favorites
 
 
 ## Road Map
@@ -30,3 +31,4 @@ The plugin is available in `browse repositories` in intellij plugins
 * Support variables in templates
 * Support multiple files gists
 * Assist user when creating a template from the IDE
+* Smart reload
