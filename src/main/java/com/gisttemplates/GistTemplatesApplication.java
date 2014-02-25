@@ -1,13 +1,19 @@
 package com.gisttemplates;
 
+import com.gisttemplates.adapter.GithubAdapter;
 import com.gisttemplates.configuration.GistTemplatesSettings;
 import com.gisttemplates.gist.GistCache;
+import com.gisttemplates.github.Github11;
+import com.gisttemplates.github.Github12;
+import com.gisttemplates.github.Github13;
+import com.intellij.openapi.application.ApplicationInfo;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
+import com.intellij.openapi.components.impl.ComponentManagerImpl;
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.plugins.github.GithubSettings;
+import org.picocontainer.MutablePicoContainer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,8 +30,10 @@ public class GistTemplatesApplication implements ApplicationComponent {
     private final List<GistCache> caches = new ArrayList<GistCache>();
     private GistCache cacheForGithubUser;
     private boolean areCachesInitialized = false;
+    private ComponentManagerImpl componentManager;
 
-    public GistTemplatesApplication() {
+    public GistTemplatesApplication(@NotNull ComponentManagerImpl componentManager) {
+        this.componentManager = componentManager;
         gistTemplatesSettings = GistTemplatesSettings.getInstance();
     }
 
@@ -34,13 +42,39 @@ public class GistTemplatesApplication implements ApplicationComponent {
     }
 
     public void initComponent() {
+        MutablePicoContainer picoContainer = componentManager.getPicoContainer();
+        initGithubAdapter(picoContainer);
+    }
+
+    private void initGithubAdapter(MutablePicoContainer picoContainer) {
+        switch (getVersion()) {
+            case V11:
+                picoContainer.registerComponentInstance(GithubAdapter.class.getName(), new Github11());
+                break;
+            case V12:
+                picoContainer.registerComponentInstance(GithubAdapter.class.getName(), new Github12());
+                break;
+            case V13:
+                picoContainer.registerComponentInstance(GithubAdapter.class.getName(), new Github13());
+                break;
+        }
+    }
+
+    private IntelliJVersion getVersion() {
+        int version = ApplicationInfo.getInstance().getBuild().getBaselineVersion();
+        if (version >= 130) {
+            return IntelliJVersion.V13;
+        } else if (version >= 120) {
+            return IntelliJVersion.V12;
+        }
+        return IntelliJVersion.V11;
+    }
+
+    enum IntelliJVersion {
+        V11, V12, V13
     }
 
     public void disposeComponent() {
-    }
-
-    public void addCacheForUser(String githubUserName) {
-        caches.add(new GistCache(githubUserName));
     }
 
     public void invalidateCaches() {
@@ -79,13 +113,15 @@ public class GistTemplatesApplication implements ApplicationComponent {
     }
 
     public void addCacheForGithubUser() {
-        cacheForGithubUser = new GistCache(GithubSettings.getInstance().getLogin(), true);
+        cacheForGithubUser = new GistCache(GithubAdapter.getInstance().getLogin(), true);
     }
 
     public List<GistCache> getCaches() {
 
         List<GistCache> allCaches = new ArrayList<GistCache>();
-        if (cacheForGithubUser == null && gistTemplatesSettings.isUseGithubAccount()) {
+        if (cacheForGithubUser == null
+                && gistTemplatesSettings.isUseGithubAccount()
+                && GithubAdapter.getInstance().isCredentialsDefined()) {
             addCacheForGithubUser();
         }
         if (cacheForGithubUser != null) {
@@ -96,10 +132,10 @@ public class GistTemplatesApplication implements ApplicationComponent {
     }
 
     private GitHubClient getGithubClient() {
+        GithubAdapter githubAdapter = GithubAdapter.getInstance();
         GitHubClient client = new GitHubClient();
-        if (gistTemplatesSettings.isUseGithubAccount()) {
-            GithubSettings githubSettings = GithubSettings.getInstance();
-            client.setCredentials(githubSettings.getLogin(), githubSettings.getPassword());
+        if (gistTemplatesSettings.isUseGithubAccount() && githubAdapter.isCredentialsDefined()) {
+            client.setCredentials(githubAdapter.getLogin(), githubAdapter.getPassword());
         }
         return client;
     }
