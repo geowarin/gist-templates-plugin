@@ -1,14 +1,14 @@
 package com.gisttemplates.configuration;
 
 import com.gisttemplates.GistTemplatesApplication;
+import com.gisttemplates.adapter.GithubAdapter;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.text.StringUtil;
 import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.plugins.github.GithubSettings;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -28,7 +28,6 @@ public class GistTemplatesConfigurable implements Configurable {
     private boolean isModified;
 
     private static final Logger LOG = Logger.getInstance(GistTemplatesConfigurable.class.getName());
-    private String githubPassword;
 
 
     public GistTemplatesConfigurable() {
@@ -38,7 +37,7 @@ public class GistTemplatesConfigurable implements Configurable {
     }
 
     private void init(GistTemplatesSettings settings) {
-        useMyGithubAccountCheckBox.setSelected(settings.isUseGithubAccount());
+        useMyGithubAccountCheckBox.setSelected(settings.isUseGithubAccount() && GithubAdapter.getInstance().isCredentialsDefined());
     }
 
     @Nls
@@ -48,6 +47,7 @@ public class GistTemplatesConfigurable implements Configurable {
     }
 
     // No override because method is not in intellij 12+
+    @SuppressWarnings("UnusedDeclaration")
     public Icon getIcon() {
         return null;
     }
@@ -86,33 +86,26 @@ public class GistTemplatesConfigurable implements Configurable {
     public static void main(String[] args) {
         JFrame frame = new JFrame("GistTemplatesConfigurable");
         frame.setContentPane(new GistTemplatesConfigurable().parentPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
 
     private class UseMyAccountActionListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {
+        public void actionPerformed(@NotNull ActionEvent actionEvent) {
             isModified = true;
 
             if (useMyGithubAccountCheckBox.isSelected()) {
 
-                githubPassword = getGithubPasswordFromSettings();
-                if (StringUtil.isEmpty(githubPassword)) {
+                if (!GithubAdapter.getInstance().isCredentialsDefined()) {
                     LOG.info("GithubSettings are not set");
                     Messages.showErrorDialog(parentPanel, "Github settings are not defined", "Login Failure");
 
                     useMyGithubAccountCheckBox.setSelected(false);
                     isModified = false;
-                } else {
-                    GistTemplatesApplication.getInstance().addCacheForGithubUser();
                 }
             }
         }
-    }
-
-    private String getGithubPasswordFromSettings() {
-        return GithubSettings.getInstance().getPassword();
     }
 }

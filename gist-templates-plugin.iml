@@ -18,6 +18,10 @@
     <orderEntry type="library" scope="TEST" name="junit-4.11" level="project" />
     <orderEntry type="library" scope="TEST" name="hamcrest-core-1.3" level="project" />
     <orderEntry type="library" exported="" name="org.eclipse.egit.github.core-2.1.5" level="project" />
+    <orderEntry type="module" module-name="intellij-11-adapter" />
+    <orderEntry type="module" module-name="intellij-12-adapter" />
+    <orderEntry type="module" module-name="intellij-13-adapter" />
+    <orderEntry type="module" module-name="intellij-adapter-api" />
   </component>
 </module>
 

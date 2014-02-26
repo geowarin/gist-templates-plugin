@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.gisttemplates</id>
     <name>Gist Templates</name>
-    <version>0.1</version>
+    <version>0.11</version>
     <vendor email="geowarin@gmail.com" url="http://geowarin.github.io/gist-templates-plugin">Geoffroy Warin</vendor>
 
     <description><![CDATA[
@@ -9,7 +9,10 @@
       ]]></description>
 
     <change-notes><![CDATA[
-      v0.1 : basic support for user github account and his favorites
+        <ul>
+            <li>v0.11 : Support for intellij 11 to 13</li>
+            <li>v0.1 : basic support for user's github account and his favorites</li>
+        </ul>
       ]]>
     </change-notes>
 

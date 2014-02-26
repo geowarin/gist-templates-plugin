@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
         name = "GistTemplatesSettings",
         storages = {
                 @Storage(
-                        file = StoragePathMacros.APP_CONFIG + "/gisttemplates_settings.xml"
+                        file = "$APP_CONFIG$/gisttemplates_settings.xml"
                 )}
 )
 public class GistTemplatesSettings implements PersistentStateComponent<Element> {
