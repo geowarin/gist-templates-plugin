@@ -3,13 +3,11 @@ package com.gisttemplates;
 import com.gisttemplates.adapter.GithubAdapter;
 import com.gisttemplates.configuration.GistTemplatesSettings;
 import com.gisttemplates.gist.GistCache;
-import com.gisttemplates.github.Github11;
-import com.gisttemplates.github.Github12;
-import com.gisttemplates.github.Github13;
 import com.intellij.openapi.application.ApplicationInfo;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.components.impl.ComponentManagerImpl;
+import com.intellij.openapi.diagnostic.Logger;
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.jetbrains.annotations.NotNull;
@@ -32,6 +30,8 @@ public class GistTemplatesApplication implements ApplicationComponent {
     private boolean areCachesInitialized = false;
     private ComponentManagerImpl componentManager;
 
+    private static final Logger LOG = Logger.getInstance(GistTemplatesApplication.class.getName());
+
     public GistTemplatesApplication(@NotNull ComponentManagerImpl componentManager) {
         this.componentManager = componentManager;
         gistTemplatesSettings = GistTemplatesSettings.getInstance();
@@ -43,19 +43,23 @@ public class GistTemplatesApplication implements ApplicationComponent {
 
     public void initComponent() {
         MutablePicoContainer picoContainer = componentManager.getPicoContainer();
-        initGithubAdapter(picoContainer);
+        try {
+            initGithubAdapter(picoContainer);
+        } catch (Exception e) {
+            LOG.error("Error while registering adapters", e);
+        }
     }
 
-    private void initGithubAdapter(MutablePicoContainer picoContainer) {
+    private void initGithubAdapter(MutablePicoContainer picoContainer) throws Exception {
         switch (getVersion()) {
             case V11:
-                picoContainer.registerComponentInstance(GithubAdapter.class.getName(), new Github11());
+                picoContainer.registerComponentInstance(GithubAdapter.class.getName(), Class.forName("com.gisttemplates.github.Github11").newInstance());
                 break;
             case V12:
-                picoContainer.registerComponentInstance(GithubAdapter.class.getName(), new Github12());
+                picoContainer.registerComponentInstance(GithubAdapter.class.getName(), Class.forName("com.gisttemplates.github.Github12").newInstance());
                 break;
             case V13:
-                picoContainer.registerComponentInstance(GithubAdapter.class.getName(), new Github13());
+                picoContainer.registerComponentInstance(GithubAdapter.class.getName(), Class.forName("com.gisttemplates.github.Github13").newInstance());
                 break;
         }
     }
