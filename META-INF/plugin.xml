@@ -21,9 +21,9 @@
 
     <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
          on how to target different products -->
-    <!-- uncomment to enable plugin in all products
+    <!-- uncomment to enable plugin in all products-->
     <depends>com.intellij.modules.lang</depends>
-    -->
+    <depends>org.jetbrains.plugins.github</depends>
 
     <application-components>
         <!-- Add your application components here -->
@@ -41,7 +41,9 @@
                 class="com.gisttemplates.action.GistTemplateEditorAction" text="GistTemplates"
                 description="Insert a gist template from github">
             <add-to-group group-id="GenerateGroup" anchor="last"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta G"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift G"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta ctrl g"/>
+            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="meta ctrl g"/>
         </action>
     </actions>
 
@@ -52,5 +54,4 @@
                             serviceImplementation="com.gisttemplates.configuration.GistTemplatesSettings"/>
     </extensions>
 
-    <depends>org.jetbrains.plugins.github</depends>
 </idea-plugin>
