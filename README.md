@@ -26,6 +26,7 @@ The plugin is available in `browse repositories` in intellij plugins
 
 ## Change log
 
+* v0.12 : Fixes a crash in intellij 13
 * v0.11 : Support for intellij 11 to 13
 * v0.1 : basic support for user's github account and his favorites
 
