@@ -16,17 +16,17 @@ The plugin is available in `browse repositories` in intellij plugins
 
 1. Configure your github account in intellij
 
-![image](images/github-settings.png)
+  ![image](images/github-settings.png)
 
 2. Allow the plugin to use your github identification
 
-![image](images/plugin-settings.png)
+  ![image](images/plugin-settings.png)
 
 3. The gist templates appear in the code > generate menu
 
-![image](images/generate.png)
+  ![image](images/generate.png)
 
-![image](images/templates.png)
+  ![image](images/templates.png)
 
 ## Change log
 
