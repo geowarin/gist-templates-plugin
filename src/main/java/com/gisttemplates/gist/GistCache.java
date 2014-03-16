@@ -1,12 +1,14 @@
 package com.gisttemplates.gist;
 
-import com.intellij.openapi.diagnostic.Logger;
-import org.eclipse.egit.github.core.Gist;
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
+import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.project.Project;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.GistService;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,49 +19,37 @@ import java.util.List;
  */
 public class GistCache {
     private final String githubUserName;
-    private final List<Gist> gists = new ArrayList<Gist>();
-    private static final Logger LOG = Logger.getInstance(GistCache.class.getName());
     private final boolean includeFavorites;
-    private final List<Gist> starredGists = new ArrayList<Gist>();
-
-    public GistCache(String githubUserName) {
-        this.githubUserName = githubUserName;
-        includeFavorites = false;
-    }
+    private List<GistTemplate> gists;
 
     public GistCache(String githubUserName, boolean includeFavorites) {
         this.githubUserName = githubUserName;
         this.includeFavorites = includeFavorites;
     }
 
-    public void fetch(GitHubClient githubClient) {
-        GistService gistService = new GistService(githubClient);
+    public void fetchGists(GitHubClient githubClient, Project project) {
         try {
-            List<Gist> gistList = gistService.getGists(githubUserName);
-            for (Gist gist : gistList) {
-                gists.add(gistService.getGist(gist.getId()));
-            }
+            fetch(githubClient, project);
         } catch (IOException e) {
-            LOG.error("Error while fetching gists for " + githubUserName, e);
-        }
-        try {
-            if (includeFavorites) {
-                List<Gist> starredGistsFromService = gistService.getStarredGists();
-                for (Gist gist : starredGistsFromService) {
-                    starredGists.add(gistService.getGist(gist.getId()));
-                }
-            }
-
-        } catch (IOException e) {
-            LOG.error("Error while fetching favorite gists for " + githubUserName, e);
+            notifyFetchError(e);
         }
     }
 
-    public List<Gist> getGists() {
+    private void notifyFetchError(IOException e) {
+        Notifications.Bus.notify(new Notification("GistTemplates", "Error while fetching gists for " + githubUserName, e.getMessage(), NotificationType.ERROR));
+    }
+
+    private void fetch(GitHubClient githubClient, Project project) throws IOException {
+        final GistService gistService = new GistService(githubClient);
+        gists = loadGist(project, gistService);
+    }
+
+    private List<GistTemplate> loadGist(Project project, GistService gistService) throws IOException {
+        LoadGistTask process = new LoadGistTask(gistService, githubUserName, includeFavorites);
+        return ProgressManager.getInstance().runProcessWithProgressSynchronously(process, "Loading gists for " + githubUserName, true, project);
+    }
+
+    public List<GistTemplate> getGists() {
         return gists;
-    }
-
-    public List<Gist> getStarredGists() {
-        return starredGists;
     }
 }
