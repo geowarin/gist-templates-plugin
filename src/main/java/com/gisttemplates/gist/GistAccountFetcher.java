@@ -9,6 +9,7 @@ import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.GistService;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,39 +18,30 @@ import java.util.List;
  *
  * @author Geoffroy Warin (http://geowarin.github.io)
  */
-public class GistCache {
+public class GistAccountFetcher {
     private final String githubUserName;
     private final boolean includeFavorites;
-    private List<GistTemplate> gists;
 
-    public GistCache(String githubUserName, boolean includeFavorites) {
+    public GistAccountFetcher(String githubUserName, boolean includeFavorites) {
         this.githubUserName = githubUserName;
         this.includeFavorites = includeFavorites;
     }
 
-    public void fetchGists(GitHubClient githubClient, Project project) {
+    public List<GistTemplate> fetchGistsList(GitHubClient githubClient, Project project) {
         try {
-            fetch(githubClient, project);
+            return loadGistListInBackground(githubClient, project);
         } catch (IOException e) {
             notifyFetchError(e);
         }
+        return Collections.emptyList();
     }
 
     private void notifyFetchError(IOException e) {
         Notifications.Bus.notify(new Notification("GistTemplates", "Error while fetching gists for " + githubUserName, e.getMessage(), NotificationType.ERROR));
     }
 
-    private void fetch(GitHubClient githubClient, Project project) throws IOException {
-        final GistService gistService = new GistService(githubClient);
-        gists = loadGist(project, gistService);
-    }
-
-    private List<GistTemplate> loadGist(Project project, GistService gistService) throws IOException {
-        LoadGistTask process = new LoadGistTask(gistService, githubUserName, includeFavorites);
+    private List<GistTemplate> loadGistListInBackground(GitHubClient githubClient, Project project) throws IOException {
+        LoadGistListTask process = new LoadGistListTask(new GistService(githubClient), githubUserName, includeFavorites);
         return ProgressManager.getInstance().runProcessWithProgressSynchronously(process, "Loading gists for " + githubUserName, true, project);
-    }
-
-    public List<GistTemplate> getGists() {
-        return gists;
     }
 }

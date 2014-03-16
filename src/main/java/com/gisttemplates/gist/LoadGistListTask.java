@@ -16,12 +16,12 @@ import java.util.List;
  *
  * @author Geoffroy Warin (http://geowarin.github.io)
  */
-class LoadGistTask implements ThrowableComputable<List<GistTemplate>, IOException> {
+class LoadGistListTask implements ThrowableComputable<List<GistTemplate>, IOException> {
     private final GistService gistService;
     private final String githubUserName;
     private final boolean includeFavorites;
 
-    LoadGistTask(GistService gistService, String githubUserName, boolean includeFavorites) {
+    LoadGistListTask(GistService gistService, String githubUserName, boolean includeFavorites) {
         this.gistService = gistService;
         this.githubUserName = githubUserName;
         this.includeFavorites = includeFavorites;
@@ -30,7 +30,9 @@ class LoadGistTask implements ThrowableComputable<List<GistTemplate>, IOExceptio
     @Override
     public List<GistTemplate> compute() throws IOException {
         List<Gist> gistList = gistService.getGists(githubUserName);
+        ProgressManager.getInstance().getProgressIndicator().setFraction(0.5);
         List<Gist> starredGists = includeFavorites ? gistService.getStarredGists() : Collections.<Gist>emptyList();
+        ProgressManager.getInstance().getProgressIndicator().setFraction(1);
         return loadGists(gistList, starredGists);
     }
 
@@ -38,11 +40,9 @@ class LoadGistTask implements ThrowableComputable<List<GistTemplate>, IOExceptio
         List<GistTemplate> loadedGists = new ArrayList<GistTemplate>(gistList.size());
         for (Gist gist : gistList) {
             loadedGists.add(new GistTemplate(gist, false));
-            ProgressManager.getInstance().getProgressIndicator().setFraction((double) loadedGists.size() / gistList.size());
         }
         for (Gist gist : starredGists) {
             loadedGists.add(new GistTemplate(gist, true));
-            ProgressManager.getInstance().getProgressIndicator().setFraction((double) loadedGists.size() / gistList.size());
         }
         return loadedGists;
     }

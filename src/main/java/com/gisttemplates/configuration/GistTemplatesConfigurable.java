@@ -1,7 +1,6 @@
 package com.gisttemplates.configuration;
 
 import com.gisttemplates.adapter.GithubAdapter;
-import com.gisttemplates.gist.GistApplicationCache;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
@@ -72,7 +71,6 @@ public class GistTemplatesConfigurable implements Configurable {
     @Override
     public void apply() throws ConfigurationException {
         gistTemplatesSettings.setUseGithubAccount(useMyGithubAccountCheckBox.isSelected());
-        GistApplicationCache.getInstance().invalidateCaches();
     }
 
     @Override

@@ -52,7 +52,7 @@
         <!-- Add your extensions here -->
         <applicationConfigurable instance="com.gisttemplates.configuration.GistTemplatesConfigurable"/>
         <applicationService serviceImplementation="com.gisttemplates.configuration.GistTemplatesSettings"/>
-        <applicationService serviceImplementation="com.gisttemplates.gist.GistApplicationCache"/>
+        <applicationService serviceImplementation="com.gisttemplates.gist.GistService"/>
     </extensions>
 
 </idea-plugin>
