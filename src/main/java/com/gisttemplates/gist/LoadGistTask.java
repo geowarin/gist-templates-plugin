@@ -31,19 +31,17 @@ class LoadGistTask implements ThrowableComputable<List<GistTemplate>, IOExceptio
     public List<GistTemplate> compute() throws IOException {
         List<Gist> gistList = gistService.getGists(githubUserName);
         List<Gist> starredGists = includeFavorites ? gistService.getStarredGists() : Collections.<Gist>emptyList();
-        return loadGists(gistList, starredGists, gistService);
+        return loadGists(gistList, starredGists);
     }
 
-    private List<GistTemplate> loadGists(List<Gist> gistList, List<Gist> starredGists, GistService gistService) throws IOException {
+    private List<GistTemplate> loadGists(List<Gist> gistList, List<Gist> starredGists) throws IOException {
         List<GistTemplate> loadedGists = new ArrayList<GistTemplate>(gistList.size());
         for (Gist gist : gistList) {
-            Gist loadedGist = gistService.getGist(gist.getId());
-            loadedGists.add(new GistTemplate(loadedGist, false));
+            loadedGists.add(new GistTemplate(gist, false));
             ProgressManager.getInstance().getProgressIndicator().setFraction((double) loadedGists.size() / gistList.size());
         }
         for (Gist gist : starredGists) {
-            Gist loadedGist = gistService.getGist(gist.getId());
-            loadedGists.add(new GistTemplate(loadedGist, true));
+            loadedGists.add(new GistTemplate(gist, true));
             ProgressManager.getInstance().getProgressIndicator().setFraction((double) loadedGists.size() / gistList.size());
         }
         return loadedGists;

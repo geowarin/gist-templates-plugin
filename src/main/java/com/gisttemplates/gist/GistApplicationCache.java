@@ -66,7 +66,7 @@ public class GistApplicationCache {
                 && GithubAdapter.getInstance().isCredentialsDefined();
     }
 
-    private GitHubClient getGithubClient() {
+    public GitHubClient getGithubClient() {
         GithubAdapter githubAdapter = GithubAdapter.getInstance();
         GitHubClient client = new GitHubClient();
         if (usePersonalGithubAccount()) {

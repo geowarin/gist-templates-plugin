@@ -9,7 +9,6 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
 import com.intellij.openapi.project.Project;
-import org.eclipse.egit.github.core.GistFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +25,6 @@ public class GistTemplateEditorAction extends EditorAction {
         super(new GistTemplateActionHandler());
     }
 
-    private static TemplateImpl createTemplateFromGist(GistTemplate gist) {
-        GistFile firstFile = gist.getFirstFile();
-        String filename = (gist.isStarred() ? "★ " : "") + firstFile.getFilename();
-        TemplateImpl template = new TemplateImpl(filename, "gists");
-        template.addTextSegment(firstFile.getContent());
-        template.setDescription(gist.getDescription());
-        return template;
-    }
-
     private static class GistTemplateActionHandler extends EditorActionHandler {
         @Override
         public void execute(Editor editor, DataContext dataContext) {
@@ -43,7 +33,7 @@ public class GistTemplateEditorAction extends EditorAction {
 
             GistApplicationCache cache = GistApplicationCache.getInstance();
             for (GistTemplate gist : cache.getAllGists(project)) {
-                TemplateImpl template = createTemplateFromGist(gist);
+                TemplateImpl template = new GistTemplateImpl(gist);
                 templates.add(template);
             }
 
