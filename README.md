@@ -26,6 +26,7 @@ The plugin is available in `browse repositories` in intellij plugins
 
 ## Change log
 
+* v0.2 : Templates are now lazy loaded. The menu appears more quickly and gists are always up to date.
 * v0.12 : Fixes a crash in intellij 13
 * v0.11 : Support for intellij 11 to 13
 * v0.1 : basic support for user's github account and his favorites
@@ -37,4 +38,3 @@ The plugin is available in `browse repositories` in intellij plugins
 * Support variables in templates
 * Support multiple files gists
 * Assist user when creating a template from the IDE
-* Smart reload

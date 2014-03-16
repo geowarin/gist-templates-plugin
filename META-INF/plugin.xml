@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.gisttemplates</id>
     <name>Gist Templates</name>
-    <version>0.12</version>
+    <version>0.2</version>
     <vendor email="geowarin@gmail.com" url="http://geowarin.github.io/gist-templates-plugin">Geoffroy Warin</vendor>
 
     <description><![CDATA[
@@ -10,6 +10,7 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.2 : Templates are now lazy loaded. The menu appears more quickly and gists are always up to date.</li>
             <li>v0.12 : Fixes a crash in intellij 13</li>
             <li>v0.11 : Support for intellij 11 to 13</li>
             <li>v0.1 : basic support for user's github account and his favorites</li>
