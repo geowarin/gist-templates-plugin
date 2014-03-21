@@ -24,8 +24,21 @@ The plugin is available in `browse repositories` in intellij plugins
 
 	![image](/images/templates.png)
 
+## Generate files from "New" dialog in project view
+
+In version 0.3 you can
+
+1. Access the new menu and select "Files from gist..."
+
+	![image](/images/generateProject.png)
+
+2. Then select a gist and the files you are interested in
+
+	![image](/images/generateProject-2.png)
+
 ## Change log
 
+* v0.3 : New feature >> ability to add one or several gist files directly from the "New" actions in project view !
 * v0.2 : Templates are now lazy loaded. The menu appears more quickly and gists are always up to date.
 * v0.12 : Fixes a crash in intellij 13
 * v0.11 : Support for intellij 11 to 13

@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.gisttemplates</id>
     <name>Gist Templates</name>
-    <version>0.2</version>
+    <version>0.3</version>
     <vendor email="geowarin@gmail.com" url="http://geowarin.github.io/gist-templates-plugin">Geoffroy Warin</vendor>
 
     <description><![CDATA[
@@ -10,6 +10,7 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.3 : v0.3 : New feature >> ability to add one or several gist files directly from the "New" actions in project view !</li>
             <li>v0.2 : Templates are now lazy loaded. The menu appears more quickly and gists are always up to date.</li>
             <li>v0.12 : Fixes a crash in intellij 13</li>
             <li>v0.11 : Support for intellij 11 to 13</li>
@@ -21,21 +22,16 @@
     <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
     <idea-version since-build="117.418"/>
 
-    <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products-->
     <depends>com.intellij.modules.lang</depends>
     <depends>org.jetbrains.plugins.github</depends>
 
     <application-components>
-        <!-- Add your application components here -->
         <component>
             <implementation-class>com.gisttemplates.GistTemplatesApplication</implementation-class>
         </component>
     </application-components>
 
     <project-components>
-        <!-- Add your project components here -->
     </project-components>
 
     <actions>
@@ -56,7 +52,6 @@
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
         <applicationConfigurable instance="com.gisttemplates.configuration.GistTemplatesConfigurable"/>
         <applicationService serviceImplementation="com.gisttemplates.configuration.GistTemplatesSettings"/>
         <applicationService serviceImplementation="com.gisttemplates.gist.GistService"/>
