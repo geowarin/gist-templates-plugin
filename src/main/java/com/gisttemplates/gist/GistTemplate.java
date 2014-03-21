@@ -3,6 +3,8 @@ package com.gisttemplates.gist;
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.GistFile;
 
+import java.util.Collection;
+
 /**
  * Date: 16/03/2014
  * Time: 16:01
@@ -26,6 +28,10 @@ public class GistTemplate {
         return gist.getFiles().values().iterator().next();
     }
 
+    public Collection<GistFile> getFiles() {
+        return gist.getFiles().values();
+    }
+
     public String getDescription() {
         return gist.getDescription();
     }
@@ -42,7 +48,7 @@ public class GistTemplate {
         this.gist = gist;
     }
 
-    public String getContent() {
+    public String getFirstFileContent() {
         return getFirstFile().getContent();
     }
 }

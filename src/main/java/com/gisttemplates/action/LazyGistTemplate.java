@@ -22,6 +22,6 @@ public class LazyGistTemplate extends TemplateImpl {
     @Override
     public String getTemplateText() {
         GistService.getInstance().loadGist(gist);
-        return gist.getContent();
+        return gist.getFirstFileContent();
     }
 }

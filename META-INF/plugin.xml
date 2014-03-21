@@ -47,6 +47,12 @@
             <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta ctrl g"/>
             <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="meta ctrl g"/>
         </action>
+        <action id="NewFilesFromGist" class="com.gisttemplates.gistfiles.NewFileFromGistAction" text="Files from gist...">
+            <add-to-group group-id="NewGroup" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift G"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta ctrl g"/>
+            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="meta ctrl g"/>
+        </action>
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
