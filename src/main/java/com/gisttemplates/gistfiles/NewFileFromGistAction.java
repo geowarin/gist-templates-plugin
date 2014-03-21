@@ -2,9 +2,9 @@ package com.gisttemplates.gistfiles;
 
 import com.gisttemplates.gist.GistService;
 import com.gisttemplates.gist.GistTemplate;
+import com.gisttemplates.utils.MyDataKeys;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -21,8 +21,8 @@ public class NewFileFromGistAction extends AnAction {
 
     public void actionPerformed(AnActionEvent e) {
         DataContext dataContext = e.getDataContext();
-        Project project = CommonDataKeys.PROJECT.getData(dataContext);
-        VirtualFile selectedDirectory = getSelectedDirectory(project, CommonDataKeys.VIRTUAL_FILE.getData(dataContext));
+        Project project = MyDataKeys.PROJECT.getData(dataContext);
+        VirtualFile selectedDirectory = getSelectedDirectory(project, MyDataKeys.VIRTUAL_FILE.getData(dataContext));
 
         List<GistTemplate> gistTemplates = GistService.getInstance().fetchGistList(project);
         GistFilesDialog gistFilesDialog = new GistFilesDialog(project, gistTemplates);
@@ -48,7 +48,6 @@ public class NewFileFromGistAction extends AnAction {
 
         return virtualFile.getParent();
     }
-
 
 
 }
