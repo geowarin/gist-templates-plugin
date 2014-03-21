@@ -6,6 +6,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.ui.*;
 import com.intellij.ui.components.JBList;
+import com.intellij.util.containers.Convertor;
 import icons.GithubIcons;
 import org.eclipse.egit.github.core.GistFile;
 import org.jetbrains.annotations.NotNull;
@@ -52,6 +53,11 @@ public class GistFilesDialog extends DialogWrapper {
 
     private void createUIComponents() {
         templateList = new JBList(templates);
+        new ListSpeedSearch(templateList, new Convertor<Object, String>() {
+            @Override public String convert(Object o) {
+                return ((GistTemplate) o).getFilename();
+            }
+        });
         templateList.setCellRenderer(new GistTemplateColoredListCellRendererWrapper());
         templateList.addListSelectionListener(new MyListSelectionListener());
 

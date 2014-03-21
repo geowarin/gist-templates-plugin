@@ -22,13 +22,13 @@ public class NewFileFromGistAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         DataContext dataContext = e.getDataContext();
         Project project = CommonDataKeys.PROJECT.getData(dataContext);
+        VirtualFile selectedDirectory = getSelectedDirectory(project, CommonDataKeys.VIRTUAL_FILE.getData(dataContext));
 
         List<GistTemplate> gistTemplates = GistService.getInstance().fetchGistList(project);
         GistFilesDialog gistFilesDialog = new GistFilesDialog(project, gistTemplates);
         gistFilesDialog.show();
 
         if (gistFilesDialog.isOK()) {
-            VirtualFile selectedDirectory = getSelectedDirectory(project, CommonDataKeys.VIRTUAL_FILE.getData(dataContext));
             new GistFileCreator(project, selectedDirectory, gistFilesDialog.getSelectedFiles())
                     .insertGistFiles(gistFilesDialog.getSelectedTemplate());
         }
