@@ -107,7 +107,7 @@ public class GistFilesDialog extends DialogWrapper {
     private static class GistTemplateColoredListCellRendererWrapper extends ColoredListCellRendererWrapper<GistTemplate> {
         @Override
         protected void doCustomize(JList list, GistTemplate template, int index, boolean selected, boolean hasFocus) {
-            append(template.getFilename(), new SimpleTextAttributes(SimpleTextAttributes.STYLE_PLAIN, JBColor.BLACK));
+            append(new SimpleColoredText(template.getFilename(), new SimpleTextAttributes(SimpleTextAttributes.STYLE_PLAIN, JBColor.BLACK)));
             setToolTipText(template.getDescription());
             if (template.isStarred())
                 setIcon(AllIcons.Toolwindows.ToolWindowFavorites);
