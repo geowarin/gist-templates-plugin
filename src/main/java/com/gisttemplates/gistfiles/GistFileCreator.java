@@ -1,9 +1,9 @@
 package com.gisttemplates.gistfiles;
 
+import com.gisttemplates.adapter.Icons;
 import com.gisttemplates.gist.GistService;
-import com.gisttemplates.gist.GistTemplate;
+import com.gisttemplates.api.GistTemplate;
 import com.google.common.collect.ComparisonChain;
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
@@ -69,10 +69,10 @@ public class GistFileCreator {
             if (fileToInsert != null && fileToInsert.exists()) {
 
                 String message = String.format("File %s already exists. Would you like to replace it ?", fileToInsert.getName());
-                boolean anwser = ConfirmationDialog.requestForConfirmation(VcsShowConfirmationOption.STATIC_SHOW_CONFIRMATION, project,
-                        message, "File exists", AllIcons.General.Warning);
+                boolean replaceFile = ConfirmationDialog.requestForConfirmation(VcsShowConfirmationOption.STATIC_SHOW_CONFIRMATION, project,
+                        message, "File exists", Icons.getInstance().warning());
 
-                if (!anwser)
+                if (!replaceFile)
                     filesToInsert.remove(gistFile);
             }
         }

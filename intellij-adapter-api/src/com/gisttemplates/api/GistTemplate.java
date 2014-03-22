@@ -1,4 +1,4 @@
-package com.gisttemplates.gist;
+package com.gisttemplates.api;
 
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.GistFile;

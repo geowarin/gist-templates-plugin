@@ -35,7 +35,7 @@
             </constraints>
             <properties>
               <text value="Use my github account (recommended)"/>
-              <toolTipText value="Tick this box if you wish to use your github credentials configurend in intelliJ. It is highly recommended to do so because github restrict the number of request an unothaurized user is able to do."/>
+              <toolTipText value="Tick this box if you wish to use your github credentials configurend in intelliJ. It is highly recommended to do so because github restricts the number of requests an anonymous user is able to perform."/>
             </properties>
           </component>
         </children>

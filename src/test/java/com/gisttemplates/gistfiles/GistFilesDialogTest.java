@@ -1,6 +1,6 @@
 package com.gisttemplates.gistfiles;
 
-import com.gisttemplates.gist.GistTemplate;
+import com.gisttemplates.api.GistTemplate;
 import org.apache.commons.lang.RandomStringUtils;
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.GistFile;

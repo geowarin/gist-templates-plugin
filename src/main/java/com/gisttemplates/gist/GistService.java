@@ -1,17 +1,22 @@
 package com.gisttemplates.gist;
 
 import com.gisttemplates.adapter.GithubAdapter;
+import com.gisttemplates.api.GistTemplate;
 import com.gisttemplates.configuration.GistTemplatesSettings;
 import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationListener;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.client.GitHubClient;
+import org.jetbrains.annotations.NotNull;
 
+import javax.swing.event.HyperlinkEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,6 +26,7 @@ import java.util.List;
  * @author Geoffroy Warin (http://geowarin.github.io)
  */
 public class GistService {
+    public static final String WEBSITE_URL = "http://geowarin.github.io/gist-templates-plugin";
     private GistTemplatesSettings gistTemplatesSettings;
 
     public GistService() {
@@ -41,13 +47,34 @@ public class GistService {
     }
 
     public List<GistTemplate> fetchGistList(Project project) {
+        List<GistAccountFetcher> accountList = getAccountList();
+        if (accountList.isEmpty()) {
+            notifyPluginNotConfigured();
+            return Collections.emptyList();
+        }
+
         List<GistTemplate> allGists = new ArrayList<GistTemplate>();
-        for (GistAccountFetcher cache : getAccountList()) {
+        for (GistAccountFetcher cache : accountList) {
             List<GistTemplate> gistTemplates = cache.fetchGistsList(getGithubClient(), project);
             allGists.addAll(gistTemplates);
         }
         return allGists;
     }
+
+    private void notifyPluginNotConfigured() {
+        String message =
+                String.format("To use gist templates plugin, please configure your github account in the options. More details <a href=\"%s\">here</a>",
+                        WEBSITE_URL);
+        Notifications.Bus.notify(new Notification("GistTemplates", "No account configured", message, NotificationType.WARNING, new MyNotificationListener()));
+    }
+
+    private class MyNotificationListener implements NotificationListener {
+        @Override
+        public void hyperlinkUpdate(@NotNull Notification notification, @NotNull HyperlinkEvent event) {
+            NotificationListener.URL_OPENING_LISTENER.hyperlinkUpdate(notification, event);
+        }
+    }
+
 
     private GitHubClient getGithubClient() {
         GithubAdapter githubAdapter = GithubAdapter.getInstance();

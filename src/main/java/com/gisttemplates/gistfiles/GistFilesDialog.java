@@ -1,13 +1,16 @@
 package com.gisttemplates.gistfiles;
 
-import com.gisttemplates.gist.GistTemplate;
-import com.intellij.icons.AllIcons;
+import com.gisttemplates.adapter.GUIFactory;
+import com.gisttemplates.api.GistTemplate;
+import com.gisttemplates.adapter.Icons;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.ui.*;
+import com.intellij.ui.CheckboxTree;
+import com.intellij.ui.CheckedTreeNode;
+import com.intellij.ui.ListSpeedSearch;
+import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.components.JBList;
 import com.intellij.util.Function;
-import icons.GithubIcons;
 import org.eclipse.egit.github.core.GistFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -58,7 +61,7 @@ public class GistFilesDialog extends DialogWrapper {
                 return ((GistTemplate) o).getFilename();
             }
         });
-        templateList.setCellRenderer(new GistTemplateColoredListCellRendererWrapper());
+        templateList.setCellRenderer(GUIFactory.getInstance().createGistTemplateColoredListCellRenderer());
         templateList.addListSelectionListener(new MyListSelectionListener());
 
         GistTemplate firstTemplate = templates.get(0);
@@ -93,26 +96,14 @@ public class GistFilesDialog extends DialogWrapper {
 
             if (userObject instanceof GistTemplate) {
                 GistTemplate gistTemplate = (GistTemplate) userObject;
-                getTextRenderer().append(gistTemplate.getFilename());
-                getTextRenderer().setIcon(GithubIcons.Github_icon);
+                getTextRenderer().append(gistTemplate.getFilename(), new SimpleTextAttributes(SimpleTextAttributes.STYLE_PLAIN, Color.BLACK));
+                getTextRenderer().setIcon(Icons.getInstance().github());
                 getTextRenderer().setToolTipText(gistTemplate.getDescription());
             } else if (userObject instanceof GistFile) {
                 GistFile gistFile = (GistFile) userObject;
-                getTextRenderer().append(gistFile.getFilename());
-                getTextRenderer().setIcon(AllIcons.FileTypes.Text);
+                getTextRenderer().append(gistFile.getFilename(), new SimpleTextAttributes(SimpleTextAttributes.STYLE_PLAIN, Color.BLACK));
+                getTextRenderer().setIcon(Icons.getInstance().textFile());
             }
-        }
-    }
-
-    private static class GistTemplateColoredListCellRendererWrapper extends ColoredListCellRendererWrapper<GistTemplate> {
-        @Override
-        protected void doCustomize(JList list, GistTemplate template, int index, boolean selected, boolean hasFocus) {
-            append(new SimpleColoredText(template.getFilename(), new SimpleTextAttributes(SimpleTextAttributes.STYLE_PLAIN, JBColor.BLACK)));
-            setToolTipText(template.getDescription());
-            if (template.isStarred())
-                setIcon(AllIcons.Toolwindows.ToolWindowFavorites);
-            else
-                setIcon(GithubIcons.Github_icon);
         }
     }
 

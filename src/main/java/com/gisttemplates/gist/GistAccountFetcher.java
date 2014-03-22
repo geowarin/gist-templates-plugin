@@ -1,5 +1,6 @@
 package com.gisttemplates.gist;
 
+import com.gisttemplates.api.GistTemplate;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
@@ -37,7 +38,7 @@ public class GistAccountFetcher {
     }
 
     private void notifyFetchError(IOException e) {
-        Notifications.Bus.notify(new Notification("GistTemplates", "Error while fetching gists for " + githubUserName, e.getMessage(), NotificationType.ERROR));
+        Notifications.Bus.notify(new Notification("GistTemplates", "Error while fetching gists for " + githubUserName, e.getClass().getSimpleName(), NotificationType.ERROR));
     }
 
     private List<GistTemplate> loadGistListInBackground(GitHubClient githubClient, Project project) throws IOException {

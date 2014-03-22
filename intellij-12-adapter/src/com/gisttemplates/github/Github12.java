@@ -1,6 +1,7 @@
 package com.gisttemplates.github;
 
 import com.gisttemplates.adapter.GithubAdapter;
+import com.jgoodies.common.base.Strings;
 import org.jetbrains.plugins.github.GithubSettings;
 
 /**
@@ -9,11 +10,12 @@ import org.jetbrains.plugins.github.GithubSettings;
  *
  * @author Geoffroy Warin (http://geowarin.github.io)
  */
+@SuppressWarnings("UnusedDeclaration")
 public class Github12 extends GithubAdapter {
 
     @Override
     public boolean isCredentialsDefined() {
-        return !GithubSettings.getInstance().isAnonymous();
+        return Strings.isNotBlank(getLogin());
     }
 
     @Override

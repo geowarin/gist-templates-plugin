@@ -1,6 +1,8 @@
 package com.gisttemplates;
 
+import com.gisttemplates.adapter.GUIFactory;
 import com.gisttemplates.adapter.GithubAdapter;
+import com.gisttemplates.adapter.Icons;
 import com.intellij.openapi.application.ApplicationInfo;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.components.impl.ComponentManagerImpl;
@@ -27,8 +29,38 @@ public class GistTemplatesApplication implements ApplicationComponent {
         MutablePicoContainer picoContainer = componentManager.getPicoContainer();
         try {
             initGithubAdapter(picoContainer);
+            initIconsAdapter(picoContainer);
+            initGuiFactory(picoContainer);
         } catch (Exception e) {
             LOG.error("Error while registering adapters", e);
+        }
+    }
+
+    private void initGuiFactory(MutablePicoContainer picoContainer) throws Exception {
+        switch (getVersion()) {
+            case V11:
+                picoContainer.registerComponentInstance(GUIFactory.class.getName(), Class.forName("com.gisttemplates.gui.GUIFactory11").newInstance());
+                break;
+            case V12:
+                picoContainer.registerComponentInstance(GUIFactory.class.getName(), Class.forName("com.gisttemplates.gui.GUIFactory12").newInstance());
+                break;
+            case V13:
+                picoContainer.registerComponentInstance(GUIFactory.class.getName(), Class.forName("com.gisttemplates.gui.GUIFactory13").newInstance());
+                break;
+        }
+    }
+
+    private void initIconsAdapter(MutablePicoContainer picoContainer) throws Exception {
+        switch (getVersion()) {
+            case V11:
+                picoContainer.registerComponentInstance(Icons.class.getName(), Class.forName("com.gisttemplates.icons.Icons11").newInstance());
+                break;
+            case V12:
+                picoContainer.registerComponentInstance(Icons.class.getName(), Class.forName("com.gisttemplates.icons.Icons12").newInstance());
+                break;
+            case V13:
+                picoContainer.registerComponentInstance(Icons.class.getName(), Class.forName("com.gisttemplates.icons.Icons13").newInstance());
+                break;
         }
     }
 

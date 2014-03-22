@@ -1,7 +1,7 @@
 package com.gisttemplates.action;
 
 import com.gisttemplates.gist.GistService;
-import com.gisttemplates.gist.GistTemplate;
+import com.gisttemplates.api.GistTemplate;
 import com.intellij.codeInsight.template.impl.TemplateImpl;
 
 /**

@@ -1,7 +1,7 @@
 package com.gisttemplates.gistfiles;
 
 import com.gisttemplates.gist.GistService;
-import com.gisttemplates.gist.GistTemplate;
+import com.gisttemplates.api.GistTemplate;
 import com.gisttemplates.utils.MyDataKeys;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -25,6 +25,9 @@ public class NewFileFromGistAction extends AnAction {
         VirtualFile selectedDirectory = getSelectedDirectory(project, MyDataKeys.VIRTUAL_FILE.getData(dataContext));
 
         List<GistTemplate> gistTemplates = GistService.getInstance().fetchGistList(project);
+        if (gistTemplates.isEmpty()) {
+            return;
+        }
         GistFilesDialog gistFilesDialog = new GistFilesDialog(project, gistTemplates);
         gistFilesDialog.show();
 

@@ -1,5 +1,6 @@
 package com.gisttemplates.gist;
 
+import com.gisttemplates.api.GistTemplate;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.util.ThrowableComputable;
 import org.eclipse.egit.github.core.Gist;
