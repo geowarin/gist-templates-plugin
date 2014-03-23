@@ -18,10 +18,7 @@ import com.intellij.psi.PsiManager;
 import com.intellij.util.ui.ConfirmationDialog;
 import org.eclipse.egit.github.core.GistFile;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Date: 21/03/2014
@@ -64,7 +61,9 @@ public class GistFileCreator {
     }
 
     private void askToConfirmForReplacement() {
-        for (GistFile gistFile : filesToInsert) {
+        Iterator<GistFile> iterator = filesToInsert.iterator();
+        while (iterator.hasNext()) {
+            GistFile gistFile = iterator.next();
             VirtualFile fileToInsert = parentDirectory.findChild(gistFile.getFilename());
             if (fileToInsert != null && fileToInsert.exists()) {
 
@@ -73,7 +72,7 @@ public class GistFileCreator {
                         message, "File exists", Icons.getInstance().warning());
 
                 if (!replaceFile)
-                    filesToInsert.remove(gistFile);
+                    iterator.remove();
             }
         }
     }

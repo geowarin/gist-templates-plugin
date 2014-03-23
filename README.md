@@ -9,7 +9,7 @@ The plugin is available in `browse repositories` in intellij plugins
 [http://plugins.jetbrains.com/plugin/7400](http://plugins.jetbrains.com/plugin/7400)
 
 We spend a lot of time making it compatible with as much versions of JetBrains IDEs as possible.
-Supported and tested versions are : itellij-11, intellij-12 and intellij-13.
+Supported and tested versions are : intellij-11, intellij-12 and intellij-13.
 
 It should also be compatible with other IDEs like WebStorm, Appcode, etc. if it is not the case, please [report the problem](https://github.com/geowarin/gist-templates-plugin/issues)
 
