@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.gisttemplates</id>
     <name>Gist Templates</name>
-    <version>0.3.2</version>
+    <version>0.3.3</version>
     <vendor email="geowarin@gmail.com" url="http://geowarin.github.io/gist-templates-plugin">Geoffroy Warin</vendor>
 
     <description><![CDATA[
@@ -10,6 +10,7 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.3.3 : Bug fix</li>
             <li>v0.3.2 : Fix compatibility issue in intellij 11 and minor GUI improvements</li>
             <li>v0.3.1 : Fix bug in intellij 12</li>
             <li>v0.3 : New feature >> ability to add one or several gist files directly from the "New" actions in project view !</li>
