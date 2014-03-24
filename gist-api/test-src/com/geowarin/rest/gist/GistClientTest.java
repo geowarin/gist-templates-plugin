@@ -11,11 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class GistClientTest {
     public static final String PASSWORD = "CHANGE_ME";
-    private GistClient gistClient;
 
-    @Test
-    public void testGetGists() throws Exception {
-
+    @Test public void should_get_gists_of_a_user() throws Exception {
         List<Gist> gists = new GistClient().getGists("geowarin");
         assertThat(gists).isNotEmpty();
         System.out.println(gists);

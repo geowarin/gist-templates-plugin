@@ -1,6 +1,7 @@
 package com.geowarin.rest.gist;
 
 import com.geowarin.rest.api.Gist;
+import com.google.common.base.Function;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.intellij.util.Base64Converter;
@@ -21,20 +22,29 @@ public class GistClient {
     }
 
     public GistClient(String user, String password) {
-        this.credentials = "Basic " + Base64Converter.encode(user + ':' + password);;
+        this.credentials = "Basic " + Base64Converter.encode(user + ':' + password);
+    }
+
+    private <Result> Result connect(String url, Function<JsonElement, Result> function) throws IOException {
+        JsonReader reader = null;
+        try {
+            reader = connect(url);
+            return function.apply(new JsonParser().parse(reader));
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }
     }
 
     public Gist getGist(String gistId) throws IOException {
-
-        JsonReader reader = connect("https://api.github.com/gists/" + gistId);
-
-        JsonElement rootElement = new JsonParser().parse(reader);
-        JsonObject gistsJson = rootElement.getAsJsonObject();
-        Gist gist = new Gson().fromJson(gistsJson, Gist.class);
-
-        return gist;
+        return connect("https://api.github.com/gists/" + gistId, new Function<JsonElement, Gist>() {
+            @Override public Gist apply(JsonElement rootElement) {
+                JsonObject gistsJson = rootElement.getAsJsonObject();
+                return new Gson().fromJson(gistsJson, Gist.class);
+            }
+        });
     }
-
 
     public List<Gist> getGists(String userName) throws IOException {
 
@@ -44,7 +54,7 @@ public class GistClient {
         JsonElement rootElement = parser.parse(reader);
         JsonArray gistsJson = rootElement.getAsJsonArray();
 
-        List<Gist> gists = new ArrayList();
+        List<Gist> gists = new ArrayList<Gist>();
         Gson gson = new Gson();
         for (JsonElement tweetElement : gistsJson) {
             Gist gist = gson.fromJson(tweetElement, Gist.class);
@@ -62,7 +72,7 @@ public class GistClient {
         JsonElement rootElement = parser.parse(reader);
         JsonArray gistsJson = rootElement.getAsJsonArray();
 
-        List<Gist> gists = new ArrayList();
+        List<Gist> gists = new ArrayList<Gist>();
         Gson gson = new Gson();
         for (JsonElement tweetElement : gistsJson) {
             Gist gist = gson.fromJson(tweetElement, Gist.class);

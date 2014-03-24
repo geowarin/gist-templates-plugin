@@ -2,8 +2,6 @@ package com.geowarin.rest.api;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.math.BigDecimal;
-
 public class GistFile {
     private String filename;
     private String type;
