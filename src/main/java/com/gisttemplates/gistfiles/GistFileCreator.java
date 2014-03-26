@@ -1,8 +1,9 @@
 package com.gisttemplates.gistfiles;
 
+import com.geowarin.rest.api.GistFile;
 import com.gisttemplates.adapter.Icons;
-import com.gisttemplates.gist.GistService;
 import com.gisttemplates.api.GistTemplate;
+import com.gisttemplates.gist.GistService;
 import com.google.common.collect.ComparisonChain;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
@@ -16,7 +17,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.PsiManager;
 import com.intellij.util.ui.ConfirmationDialog;
-import org.eclipse.egit.github.core.GistFile;
 
 import java.util.*;
 
@@ -54,10 +54,21 @@ public class GistFileCreator {
             public void run() {
                 for (GistFile gistFile : parentGist.getFiles()) {
                     if (filesToInsert.contains(gistFile))
-                        createOrReplaceFile(gistFile.getFilename(), gistFile.getContent());
+                        createOrReplaceFileFromGist(gistFile);
                 }
             }
         });
+    }
+
+    private void createOrReplaceFileFromGist(GistFile gistFile) {
+        if (gistFile.isBinary())
+            createOrReplaceBinaryFile(gistFile.getFilename(), gistFile.getContent());
+        else
+            createOrReplaceFileSourceFile(gistFile.getFilename(), gistFile.getContent());
+    }
+
+    private void createOrReplaceBinaryFile(String filename, String content) {
+        //To change body of created methods use File | Settings | File Templates.
     }
 
     private void askToConfirmForReplacement() {
@@ -84,14 +95,12 @@ public class GistFileCreator {
         return added.getVirtualFile();
     }
 
-    private VirtualFile createOrReplaceFile(String fileName, String text) {
-
+    private VirtualFile createOrReplaceFileSourceFile(String fileName, String text) {
         VirtualFile file = parentDirectory.findChild(fileName);
         if (file != null && file.exists()) {
             replaceContent(file, text);
             return file;
         }
-
         return createFile(fileName, text);
     }
 

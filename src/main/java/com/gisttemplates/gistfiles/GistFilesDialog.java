@@ -1,8 +1,9 @@
 package com.gisttemplates.gistfiles;
 
+import com.geowarin.rest.api.GistFile;
 import com.gisttemplates.adapter.GUIFactory;
-import com.gisttemplates.api.GistTemplate;
 import com.gisttemplates.adapter.Icons;
+import com.gisttemplates.api.GistTemplate;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.ui.CheckboxTree;
@@ -11,7 +12,6 @@ import com.intellij.ui.ListSpeedSearch;
 import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.components.JBList;
 import com.intellij.util.Function;
-import org.eclipse.egit.github.core.GistFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

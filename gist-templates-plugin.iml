@@ -17,7 +17,7 @@
     <orderEntry type="module" module-name="intellij-12-adapter" exported="" />
     <orderEntry type="module" module-name="intellij-13-adapter" exported="" />
     <orderEntry type="module" module-name="intellij-adapter-api" exported="" />
-    <orderEntry type="library" exported="" name="org.eclipse.mylyn.github:org.eclipse.egit.github.core:2.1.5" level="project" />
+    <orderEntry type="module" module-name="gist-api" />
   </component>
 </module>
 

@@ -1,12 +1,15 @@
 package com.gisttemplates.gistfiles;
 
+import com.geowarin.rest.api.Gist;
+import com.geowarin.rest.api.GistFile;
 import com.gisttemplates.api.GistTemplate;
 import org.apache.commons.lang.RandomStringUtils;
-import org.eclipse.egit.github.core.Gist;
-import org.eclipse.egit.github.core.GistFile;
 
 import javax.swing.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Date: 21/03/2014

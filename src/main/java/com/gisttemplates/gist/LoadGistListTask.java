@@ -1,10 +1,10 @@
 package com.gisttemplates.gist;
 
+import com.geowarin.rest.api.Gist;
+import com.geowarin.rest.gist.GistClient;
 import com.gisttemplates.api.GistTemplate;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.util.ThrowableComputable;
-import org.eclipse.egit.github.core.Gist;
-import org.eclipse.egit.github.core.service.GistService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,21 +18,21 @@ import java.util.List;
  * @author Geoffroy Warin (http://geowarin.github.io)
  */
 class LoadGistListTask implements ThrowableComputable<List<GistTemplate>, IOException> {
-    private final GistService gistService;
+    private GistClient gistClient;
     private final String githubUserName;
     private final boolean includeFavorites;
 
-    LoadGistListTask(GistService gistService, String githubUserName, boolean includeFavorites) {
-        this.gistService = gistService;
+    LoadGistListTask(GistClient gistClient, String githubUserName, boolean includeFavorites) {
+        this.gistClient = gistClient;
         this.githubUserName = githubUserName;
         this.includeFavorites = includeFavorites;
     }
 
     @Override
     public List<GistTemplate> compute() throws IOException {
-        List<Gist> gistList = gistService.getGists(githubUserName);
+        List<Gist> gistList = gistClient.getGists(githubUserName);
         ProgressManager.getInstance().getProgressIndicator().setFraction(0.5);
-        List<Gist> starredGists = includeFavorites ? gistService.getStarredGists() : Collections.<Gist>emptyList();
+        List<Gist> starredGists = includeFavorites ? gistClient.getStarredGists() : Collections.<Gist>emptyList();
         ProgressManager.getInstance().getProgressIndicator().setFraction(1);
         return loadGists(gistList, starredGists);
     }

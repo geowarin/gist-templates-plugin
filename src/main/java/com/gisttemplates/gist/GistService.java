@@ -1,5 +1,7 @@
 package com.gisttemplates.gist;
 
+import com.geowarin.rest.api.Gist;
+import com.geowarin.rest.gist.GistClient;
 import com.gisttemplates.adapter.GithubAdapter;
 import com.gisttemplates.api.GistTemplate;
 import com.gisttemplates.configuration.GistTemplatesSettings;
@@ -9,8 +11,6 @@ import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
-import org.eclipse.egit.github.core.Gist;
-import org.eclipse.egit.github.core.client.GitHubClient;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.event.HyperlinkEvent;
@@ -76,13 +76,11 @@ public class GistService {
     }
 
 
-    private GitHubClient getGithubClient() {
+    private GistClient getGithubClient() {
         GithubAdapter githubAdapter = GithubAdapter.getInstance();
-        GitHubClient client = new GitHubClient();
-        if (usePersonalGithubAccount()) {
-            client.setCredentials(githubAdapter.getLogin(), githubAdapter.getPassword());
-        }
-        return client;
+        return usePersonalGithubAccount()
+                ? new GistClient(githubAdapter.getLogin(), githubAdapter.getPassword())
+                : new GistClient();
     }
 
     private void notifyFetchError(IOException e, String gistId) {
@@ -90,8 +88,7 @@ public class GistService {
     }
 
     private Gist loadGist(String gistId) throws IOException {
-        org.eclipse.egit.github.core.service.GistService gistService = new org.eclipse.egit.github.core.service.GistService(getGithubClient());
-        return gistService.getGist(gistId);
+        return getGithubClient().getGist(gistId);
     }
 
     private List<GistAccountFetcher> getAccountList() {

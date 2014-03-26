@@ -1,13 +1,12 @@
 package com.gisttemplates.gist;
 
+import com.geowarin.rest.gist.GistClient;
 import com.gisttemplates.api.GistTemplate;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
-import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.service.GistService;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -28,9 +27,9 @@ public class GistAccountFetcher {
         this.includeFavorites = includeFavorites;
     }
 
-    public List<GistTemplate> fetchGistsList(GitHubClient githubClient, Project project) {
+    public List<GistTemplate> fetchGistsList(GistClient gistClient, Project project) {
         try {
-            return loadGistListInBackground(githubClient, project);
+            return loadGistListInBackground(gistClient, project);
         } catch (IOException e) {
             notifyFetchError(e);
         }
@@ -41,8 +40,8 @@ public class GistAccountFetcher {
         Notifications.Bus.notify(new Notification("GistTemplates", "Error while fetching gists for " + githubUserName, e.getClass().getSimpleName(), NotificationType.ERROR));
     }
 
-    private List<GistTemplate> loadGistListInBackground(GitHubClient githubClient, Project project) throws IOException {
-        LoadGistListTask process = new LoadGistListTask(new GistService(githubClient), githubUserName, includeFavorites);
+    private List<GistTemplate> loadGistListInBackground(GistClient gistClient, Project project) throws IOException {
+        LoadGistListTask process = new LoadGistListTask(gistClient, githubUserName, includeFavorites);
         return ProgressManager.getInstance().runProcessWithProgressSynchronously(process, "Loading gists for " + githubUserName, true, project);
     }
 }

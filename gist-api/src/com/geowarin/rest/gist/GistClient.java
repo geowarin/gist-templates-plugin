@@ -19,6 +19,8 @@ import java.util.List;
 public class GistClient {
     private final String credentials;
     private static final String HEADER_AUTHORIZATION = "Authorization";
+    protected static final String HEADER_ACCEPT = "Accept";
+
     public GistClient() {
         credentials = null;
     }
@@ -38,19 +40,6 @@ public class GistClient {
         return connectAndGetResult("https://api.github.com/gists/starred", MULTI_GIST_TRANSFORMER);
     }
 
-    private JsonReader connect(String fetchUrl) throws IOException {
-        HttpURLConnection request = (HttpURLConnection) new URL(fetchUrl).openConnection();
-        if (credentials != null) {
-            request.setRequestProperty(HEADER_AUTHORIZATION, credentials);
-        }
-
-        String rateLimit = request.getHeaderField("X-RateLimit-Limit");
-        System.out.println("rateLimit = " + rateLimit);
-
-        request.connect();
-        return new JsonReader(new InputStreamReader(request.getInputStream()));
-    }
-
     private <Result> Result connectAndGetResult(String url, Function<JsonElement, Result> resultTransformer) throws IOException {
         JsonReader reader = null;
         try {
@@ -61,6 +50,23 @@ public class GistClient {
                 reader.close();
             }
         }
+    }
+
+    private JsonReader connect(String fetchUrl) throws IOException {
+        HttpURLConnection request = (HttpURLConnection) new URL(fetchUrl).openConnection();
+        if (credentials != null) {
+            request.setRequestProperty(HEADER_AUTHORIZATION, credentials);
+        }
+        request.setRequestProperty(HEADER_ACCEPT, "application/vnd.github.beta+json");
+
+        /*
+        String rateLimit = request.getHeaderField("X-RateLimit-Limit");
+        String remaningRequests = request.getHeaderField("X-RateLimit-Remaining");
+        String limitResetTimestamp = request.getHeaderField("X-RateLimit-Reset");
+        */
+
+        request.connect();
+        return new JsonReader(new InputStreamReader(request.getInputStream()));
     }
 
     private static final Function<JsonElement,Gist> SINGLE_GIST_TRANSFORMER = new Function<JsonElement, Gist>() {

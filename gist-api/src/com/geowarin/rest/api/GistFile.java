@@ -45,4 +45,16 @@ public class GistFile {
                 ", size=" + size +
                 '}';
     }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public boolean isBinary() {
+        return false;  //To change body of created methods use File | Settings | File Templates.
+    }
 }

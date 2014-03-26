@@ -9,6 +9,7 @@ public class Gist {
     @SerializedName("html_url")
     private String htmlUrl;
     private Map<String, GistFile> files;
+    private String description;
 
     public String getId() {
         return id;
@@ -22,11 +23,23 @@ public class Gist {
         return files;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
         return "Gist{" +
                 "id='" + id + '\'' +
                 ", htmlUrl='" + htmlUrl + '\'' +
                 '}';
+    }
+
+    public void setFiles(Map<String, GistFile> files) {
+        this.files = files;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
