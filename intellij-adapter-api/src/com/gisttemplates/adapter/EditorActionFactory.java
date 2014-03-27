@@ -1,12 +1,8 @@
 package com.gisttemplates.adapter;
 
 
-import com.gisttemplates.api.GistTemplate;
-import com.intellij.codeInsight.template.impl.TemplateImpl;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
-
-import java.util.List;
 
 /**
  * Date: 27/03/2014
@@ -20,5 +16,5 @@ public abstract class EditorActionFactory {
         return ServiceManager.getService(EditorActionFactory.class);
     }
 
-    public abstract EditorActionHandler createActionHandler(List<TemplateImpl> gistTemplates);
+    public abstract EditorActionHandler createActionHandler();
 }

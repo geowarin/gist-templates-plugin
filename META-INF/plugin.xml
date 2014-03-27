@@ -57,7 +57,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable instance="com.gisttemplates.configuration.GistTemplatesConfigurable"/>
         <applicationService serviceImplementation="com.gisttemplates.configuration.GistTemplatesSettings"/>
-        <applicationService serviceImplementation="com.gisttemplates.gist.GistService"/>
+        <applicationService serviceImplementation="com.gisttemplates.gist.GistServiceImpl" serviceInterface="com.gisttemplates.api.GistService"/>
     </extensions>
 
 </idea-plugin>

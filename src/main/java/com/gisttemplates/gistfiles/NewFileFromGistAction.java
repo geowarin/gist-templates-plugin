@@ -1,7 +1,7 @@
 package com.gisttemplates.gistfiles;
 
-import com.gisttemplates.gist.GistService;
 import com.gisttemplates.api.GistTemplate;
+import com.gisttemplates.api.GistService;
 import com.gisttemplates.utils.MyDataKeys;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;

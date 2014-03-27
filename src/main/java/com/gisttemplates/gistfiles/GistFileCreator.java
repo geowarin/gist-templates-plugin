@@ -1,8 +1,8 @@
 package com.gisttemplates.gistfiles;
 
 import com.gisttemplates.adapter.Icons;
-import com.gisttemplates.gist.GistService;
 import com.gisttemplates.api.GistTemplate;
+import com.gisttemplates.api.GistService;
 import com.google.common.collect.ComparisonChain;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;

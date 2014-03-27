@@ -1,13 +1,13 @@
 package com.gisttemplates.gist;
 
 import com.gisttemplates.adapter.GithubAdapter;
+import com.gisttemplates.api.GistService;
 import com.gisttemplates.api.GistTemplate;
 import com.gisttemplates.configuration.GistTemplatesSettings;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationListener;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
-import com.intellij.openapi.components.ServiceManager;
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.jetbrains.annotations.NotNull;
@@ -24,18 +24,15 @@ import java.util.List;
  *
  * @author Geoffroy Warin (http://geowarin.github.io)
  */
-public class GistService {
+public class GistServiceImpl extends GistService {
     public static final String WEBSITE_URL = "http://geowarin.github.io/gist-templates-plugin";
     private GistTemplatesSettings gistTemplatesSettings;
 
-    public GistService() {
+    public GistServiceImpl() {
         gistTemplatesSettings = GistTemplatesSettings.getInstance();
     }
 
-    public static GistService getInstance() {
-        return ServiceManager.getService(GistService.class);
-    }
-
+    @Override
     public void loadGist(GistTemplate gistTemplate) {
         try {
             Gist gist = loadGist(gistTemplate.getId());
@@ -45,6 +42,7 @@ public class GistService {
         }
     }
 
+    @Override
     public List<GistTemplate> fetchGistList() {
         List<GistAccountFetcher> accountList = getAccountList();
         if (accountList.isEmpty()) {

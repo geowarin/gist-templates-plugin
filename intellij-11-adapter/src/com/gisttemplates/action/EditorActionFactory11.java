@@ -1,12 +1,16 @@
 package com.gisttemplates.action;
 
 import com.gisttemplates.adapter.EditorActionFactory;
+import com.gisttemplates.api.GistService;
+import com.gisttemplates.api.GistTemplate;
+import com.gisttemplates.api.LazyGistTemplate;
 import com.intellij.codeInsight.template.impl.ListTemplatesHandler;
 import com.intellij.codeInsight.template.impl.TemplateImpl;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,20 +21,22 @@ import java.util.List;
  */
 public class EditorActionFactory11 extends EditorActionFactory {
 
-    @Override public EditorActionHandler createActionHandler(List<TemplateImpl> gistTemplates) {
-        return new GistTemplateActionHandler(gistTemplates);
+    @Override public EditorActionHandler createActionHandler() {
+        return new GistTemplateActionHandler();
     }
 
     private class GistTemplateActionHandler extends EditorActionHandler {
-        private final List<TemplateImpl> templates;
-
-        public GistTemplateActionHandler(List<TemplateImpl> templates) {
-            this.templates = templates;
-        }
-
         @Override
         public void execute(Editor editor, DataContext dataContext) {
-            ListTemplatesHandler.showTemplatesLookup(editor.getProject(), editor, "", templates);
+            ListTemplatesHandler.showTemplatesLookup(editor.getProject(), editor, "", createGistTemplatesList());
+        }
+
+        private List<TemplateImpl> createGistTemplatesList() {
+            List<TemplateImpl> templates = new ArrayList<TemplateImpl>();
+            for (GistTemplate gist : GistService.getInstance().fetchGistList()) {
+                templates.add(new LazyGistTemplate(gist));
+            }
+            return templates;
         }
     }
 }
