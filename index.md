@@ -46,6 +46,8 @@ In version 0.3 you can
 
 ## Change log
 
+* v0.3.4 : Fixed compatibility with intellij 13.1
+* v0.3.3 : Bug fix
 * v0.3.2 : Fix compatibility issue in intellij 11 and minor GUI improvements
 * v0.3.1 : Fix compatibility issue in intellij 12
 * v0.3 : New feature >> ability to add one or several gist files directly from the "New" actions in project view !
