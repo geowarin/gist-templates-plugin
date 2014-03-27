@@ -46,6 +46,7 @@ In version 0.3 you can
 
 ## Change log
 
+* v0.3.5 : More information in case of error while fetching gists
 * v0.3.4 : Fixed compatibility with intellij 13.1
 * v0.3.3 : Bug fix
 * v0.3.2 : Fix compatibility issue in intellij 11 and minor GUI improvements
