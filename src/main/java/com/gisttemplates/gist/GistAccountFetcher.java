@@ -28,9 +28,9 @@ public class GistAccountFetcher {
         this.includeFavorites = includeFavorites;
     }
 
-    public List<GistTemplate> fetchGistsList(GitHubClient githubClient, Project project) {
+    public List<GistTemplate> fetchGistsList(GitHubClient githubClient) {
         try {
-            return loadGistListInBackground(githubClient, project);
+            return loadGistListInBackground(githubClient);
         } catch (IOException e) {
             notifyFetchError(e);
         }
@@ -41,8 +41,8 @@ public class GistAccountFetcher {
         Notifications.Bus.notify(new Notification("GistTemplates", "Error while fetching gists for " + githubUserName, e.getClass().getSimpleName(), NotificationType.ERROR));
     }
 
-    private List<GistTemplate> loadGistListInBackground(GitHubClient githubClient, Project project) throws IOException {
+    private List<GistTemplate> loadGistListInBackground(GitHubClient githubClient) throws IOException {
         LoadGistListTask process = new LoadGistListTask(new GistService(githubClient), githubUserName, includeFavorites);
-        return ProgressManager.getInstance().runProcessWithProgressSynchronously(process, "Loading gists for " + githubUserName, true, project);
+        return ProgressManager.getInstance().runProcessWithProgressSynchronously(process, "Loading gists for " + githubUserName, true, null);
     }
 }

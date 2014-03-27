@@ -24,7 +24,7 @@ public class NewFileFromGistAction extends AnAction {
         Project project = MyDataKeys.PROJECT.getData(dataContext);
         VirtualFile selectedDirectory = getSelectedDirectory(project, MyDataKeys.VIRTUAL_FILE.getData(dataContext));
 
-        List<GistTemplate> gistTemplates = GistService.getInstance().fetchGistList(project);
+        List<GistTemplate> gistTemplates = GistService.getInstance().fetchGistList();
         if (gistTemplates.isEmpty()) {
             return;
         }

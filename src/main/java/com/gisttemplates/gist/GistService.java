@@ -8,7 +8,6 @@ import com.intellij.notification.NotificationListener;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +45,7 @@ public class GistService {
         }
     }
 
-    public List<GistTemplate> fetchGistList(Project project) {
+    public List<GistTemplate> fetchGistList() {
         List<GistAccountFetcher> accountList = getAccountList();
         if (accountList.isEmpty()) {
             notifyPluginNotConfigured();
@@ -55,7 +54,7 @@ public class GistService {
 
         List<GistTemplate> allGists = new ArrayList<GistTemplate>();
         for (GistAccountFetcher cache : accountList) {
-            List<GistTemplate> gistTemplates = cache.fetchGistsList(getGithubClient(), project);
+            List<GistTemplate> gistTemplates = cache.fetchGistsList(getGithubClient());
             allGists.addAll(gistTemplates);
         }
         return allGists;

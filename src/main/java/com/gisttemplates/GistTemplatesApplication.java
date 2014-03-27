@@ -1,5 +1,6 @@
 package com.gisttemplates;
 
+import com.gisttemplates.adapter.EditorActionFactory;
 import com.gisttemplates.adapter.GUIFactory;
 import com.gisttemplates.adapter.GithubAdapter;
 import com.gisttemplates.adapter.Icons;
@@ -31,8 +32,23 @@ public class GistTemplatesApplication implements ApplicationComponent {
             initGithubAdapter(picoContainer);
             initIconsAdapter(picoContainer);
             initGuiFactory(picoContainer);
+            initEditorActionFactory(picoContainer);
         } catch (Exception e) {
             LOG.error("Error while registering adapters", e);
+        }
+    }
+
+    private void initEditorActionFactory(MutablePicoContainer picoContainer) throws Exception {
+        switch (getVersion()) {
+            case V11:
+                picoContainer.registerComponentInstance(EditorActionFactory.class.getName(), Class.forName("com.gisttemplates.action.EditorActionFactory11").newInstance());
+                break;
+            case V12:
+                picoContainer.registerComponentInstance(EditorActionFactory.class.getName(), Class.forName("com.gisttemplates.action.EditorActionFactory12").newInstance());
+                break;
+            case V13:
+                picoContainer.registerComponentInstance(EditorActionFactory.class.getName(), Class.forName("com.gisttemplates.action.EditorActionFactory13").newInstance());
+                break;
         }
     }
 

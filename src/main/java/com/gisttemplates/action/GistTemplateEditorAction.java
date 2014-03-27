@@ -1,5 +1,6 @@
 package com.gisttemplates.action;
 
+import com.gisttemplates.adapter.EditorActionFactory;
 import com.gisttemplates.gist.GistService;
 import com.gisttemplates.api.GistTemplate;
 import com.intellij.codeInsight.template.impl.ListTemplatesHandler;
@@ -22,20 +23,12 @@ import java.util.List;
 public class GistTemplateEditorAction extends EditorAction {
 
     public GistTemplateEditorAction() {
-        super(new GistTemplateActionHandler());
+        super(EditorActionFactory.getInstance().createActionHandler(createGistTemplatesList()));
     }
 
-    private static class GistTemplateActionHandler extends EditorActionHandler {
-        @Override
-        public void execute(Editor editor, DataContext dataContext) {
-            List<TemplateImpl> templates = createGistTemplatesList(editor.getProject());
-            ListTemplatesHandler.showTemplatesLookup(editor.getProject(), editor, "", templates);
-        }
-    }
-
-    private static List<TemplateImpl> createGistTemplatesList(Project project) {
+    private static List<TemplateImpl> createGistTemplatesList() {
         List<TemplateImpl> templates = new ArrayList<TemplateImpl>();
-        for (GistTemplate gist : GistService.getInstance().fetchGistList(project)) {
+        for (GistTemplate gist : GistService.getInstance().fetchGistList()) {
             templates.add(new LazyGistTemplate(gist));
         }
         return templates;
