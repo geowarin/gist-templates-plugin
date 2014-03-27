@@ -7,6 +7,7 @@ import com.intellij.notification.Notifications;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
 import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.client.RequestException;
 import org.eclipse.egit.github.core.service.GistService;
 
 import java.io.IOException;
@@ -38,7 +39,13 @@ public class GistAccountFetcher {
     }
 
     private void notifyFetchError(IOException e) {
-        Notifications.Bus.notify(new Notification("GistTemplates", "Error while fetching gists for " + githubUserName, e.getClass().getSimpleName(), NotificationType.ERROR));
+        String content;
+        if (e instanceof RequestException) {
+            content = ((RequestException) e).formatErrors();
+        } else {
+            content = e.getClass().getSimpleName() + " : " + e.getMessage();
+        }
+        Notifications.Bus.notify(new Notification("GistTemplates", "Error while fetching gists for " + githubUserName, content, NotificationType.ERROR));
     }
 
     private List<GistTemplate> loadGistListInBackground(GitHubClient githubClient) throws IOException {
