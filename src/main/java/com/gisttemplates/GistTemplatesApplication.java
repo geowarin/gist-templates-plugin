@@ -44,9 +44,11 @@ public class GistTemplatesApplication implements ApplicationComponent {
                 picoContainer.registerComponentInstance(EditorActionFactory.class.getName(), Class.forName("com.gisttemplates.action.EditorActionFactory11").newInstance());
                 break;
             case V12:
+            // For AppCode and ides still built against 131 API
+            case V13:
                 picoContainer.registerComponentInstance(EditorActionFactory.class.getName(), Class.forName("com.gisttemplates.action.EditorActionFactory12").newInstance());
                 break;
-            case V13:
+            case V135:
                 picoContainer.registerComponentInstance(EditorActionFactory.class.getName(), Class.forName("com.gisttemplates.action.EditorActionFactory13").newInstance());
                 break;
         }
@@ -61,6 +63,7 @@ public class GistTemplatesApplication implements ApplicationComponent {
                 picoContainer.registerComponentInstance(GUIFactory.class.getName(), Class.forName("com.gisttemplates.gui.GUIFactory12").newInstance());
                 break;
             case V13:
+            case V135:
                 picoContainer.registerComponentInstance(GUIFactory.class.getName(), Class.forName("com.gisttemplates.gui.GUIFactory13").newInstance());
                 break;
         }
@@ -75,6 +78,7 @@ public class GistTemplatesApplication implements ApplicationComponent {
                 picoContainer.registerComponentInstance(Icons.class.getName(), Class.forName("com.gisttemplates.icons.Icons12").newInstance());
                 break;
             case V13:
+            case V135:
                 picoContainer.registerComponentInstance(Icons.class.getName(), Class.forName("com.gisttemplates.icons.Icons13").newInstance());
                 break;
         }
@@ -89,6 +93,7 @@ public class GistTemplatesApplication implements ApplicationComponent {
                 picoContainer.registerComponentInstance(GithubAdapter.class.getName(), Class.forName("com.gisttemplates.github.Github12").newInstance());
                 break;
             case V13:
+            case V135:
                 picoContainer.registerComponentInstance(GithubAdapter.class.getName(), Class.forName("com.gisttemplates.github.Github13").newInstance());
                 break;
         }
@@ -96,7 +101,9 @@ public class GistTemplatesApplication implements ApplicationComponent {
 
     private IntelliJVersion getVersion() {
         int version = ApplicationInfo.getInstance().getBuild().getBaselineVersion();
-        if (version >= 130) {
+        if (version >= 135) {
+            return IntelliJVersion.V135;
+        } else if (version >= 130) {
             return IntelliJVersion.V13;
         } else if (version >= 120) {
             return IntelliJVersion.V12;
@@ -105,7 +112,7 @@ public class GistTemplatesApplication implements ApplicationComponent {
     }
 
     enum IntelliJVersion {
-        V11, V12, V13
+        V11, V12, V13, V135
     }
 
     public void disposeComponent() {
