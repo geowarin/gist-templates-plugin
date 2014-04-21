@@ -7,7 +7,7 @@
     <description><![CDATA[
       Fetch gists from one or several github gists accounts and use them as templates inside IntelliJ.<br>
 
-      If you like it don't forget to rank and comment the plugin <a href="">on JetBrains site</a>. <br>
+      If you like the plugin don't forget to rank and comment the plugin <a href="http://plugins.jetbrains.com/plugin/7400">on JetBrains site</a>. <br>
 
       If you don't, please drop by our github repository and submit an
       <a href="https://github.com/geowarin/gist-templates-plugin/issues">issue</a> or propose an improvement !<br>
