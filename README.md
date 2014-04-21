@@ -43,6 +43,7 @@ In version 0.3 you can
 
 ## Change log
 
+* v0.3.6 : Fixed compatibility issues with API 131 (AppCode, Intellij 13.0...)
 * v0.3.5 : More information in case of error while fetching gists
 * v0.3.4 : Fixed compatibility with intellij 13.1
 * v0.3.3 : Bug fix

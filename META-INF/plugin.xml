@@ -1,15 +1,21 @@
 <idea-plugin version="2">
     <id>com.gisttemplates</id>
     <name>Gist Templates</name>
-    <version>0.3.5</version>
+    <version>0.3.6</version>
     <vendor email="geowarin@gmail.com" url="http://geowarin.github.io/gist-templates-plugin">Geoffroy Warin</vendor>
 
     <description><![CDATA[
       Fetch gists from one or several github gists accounts and use them as templates inside IntelliJ.<br>
+
+      If you like it don't forget to rank and comment the plugin <a href="">on JetBrains site</a>. <br>
+
+      If you don't, please drop by our github repository and submit an
+      <a href="https://github.com/geowarin/gist-templates-plugin/issues">issue</a> or propose an improvement !<br>
       ]]></description>
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.3.6 : Fixed compatibility issues with API 131 (AppCode, Intellij 13.0...)</li>
             <li>v0.3.5 : More information in case of error while fetching gists</li>
             <li>v0.3.4 : Fix compatibility with intellij 13.1</li>
             <li>v0.3.3 : Bug fix</li>
